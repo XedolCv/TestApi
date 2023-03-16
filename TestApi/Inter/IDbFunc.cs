@@ -23,6 +23,7 @@ public class Repository: IRepository
     public Repository(MyContext context)
     {
         _context = context; 
+        _context.Database.Migrate();
         //context.Database.EnsureDeleted();
         //context.Database.EnsureCreated();
     }

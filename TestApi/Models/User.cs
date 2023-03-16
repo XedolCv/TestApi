@@ -34,12 +34,19 @@ public class User :IEntity
         this.userRole = userRole;
     }
 
-    public bool GenerateNewRefresh()
+    public bool CheckRefresh(Guid refToken)
+    {
+        return refreshToken == refToken && expirationRefreshTokenTime >= DateTime.Now;
+    }
+
+    public bool GenerateNewRefresh(IRepository _rep)
     {
         if (this.refreshToken is null || !LifetimeRefreshValidator(this))
         {
             this.refreshToken = new Guid?();
             this.expirationRefreshTokenTime = DateTime.Now.AddDays(1);
+            _rep.Update<User>(this);
+            _rep.Save();
             return true;
         }
         return false;

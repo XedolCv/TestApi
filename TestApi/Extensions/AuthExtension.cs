@@ -30,7 +30,8 @@ public static class AuthExtension
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = issuerSigningKey,
-                    LifetimeValidator = LifetimeValidator
+                    LifetimeValidator = LifetimeValidator,
+                    
                 };
             });
 

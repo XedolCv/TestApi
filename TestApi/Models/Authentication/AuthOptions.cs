@@ -1,11 +1,12 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace TestApi.Models;
-
+[NotMapped]
 public class AuthOptions
 {
     public const string issuer = "mytestapi"; // издатель токена
@@ -48,8 +49,7 @@ public class AuthOptions
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, person.login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, person.userRole)
+                new Claim("id",person.id.ToString())
             };
             ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

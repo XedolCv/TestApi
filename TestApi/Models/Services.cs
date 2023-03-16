@@ -4,7 +4,7 @@ using TestApi.Inter;
 namespace TestApi.Models;
 
 
-[NotMapped]
+
 public class Services : IEntity<int>
 {
     public int id { get; set; }

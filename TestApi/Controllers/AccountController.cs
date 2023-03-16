@@ -25,32 +25,36 @@ public class AccountController : ControllerBase
     {
         User user = _rep.GetOne<User>(it => it.login == username && it.password == password);
         user.CreateRefresh(_rep);
-        var identity = AuthOptions.GetIdentity(user);
-        if (identity == null)
+        var token = AcessToken.GenerateNewToken(user);
+        if (token == null)
         {
             return BadRequest(new { errorText = "Invalid username or password." });
         }
-        AcessToken response = AcessToken.GenerateNewToken(identity,user);
-        return Ok(response);
+        return Ok(token);
     }
-    
+
     [HttpPost("/refreshToken")]
     public IActionResult RefreshToken(RefreshTokenRequest request)
     {
-        var token = "[encoded jwt]";  
-        var handler = new JwtSecurityTokenHandler();
-        var jwtSecurityToken = handler.ReadJwtToken(request.acessToken);
-        
-        //sss
-         //request.acessToken
-        // User user = _rep.GetOne<User>();
-        // user.CreateRefresh(_rep);
-        // var identity = AuthOptions.GetIdentity(user);
-        // if (identity == null)
-        // {
-        //     return BadRequest(new { errorText = "Invalid username or password." });
-        // }
-        // AcessToken response = AcessToken.GenerateNewToken(identity,user);
-        return Ok(true);
+        try
+        {
+            TokenData date = new TokenData(request.acessToken,_rep,request.refreshToken);
+            if (date.refreshAvailability)
+            {
+                AcessToken response = AcessToken.GenerateNewToken(date.tokenOwner);
+                date.tokenOwner.GenerateNewRefresh(_rep);
+                return Ok(response);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+            _rep.Dispose();
+        }
+       
     }
 }
