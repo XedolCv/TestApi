@@ -5,14 +5,12 @@ using TestApi.Inter;
 namespace TestApi.Models;
 
 public class User :IEntity
-{public Guid id { get; set; }
+{
+    public Guid id { get; set; }
     public string userName { get; set; }
     public string login { get; set; }
     public string password { get; set; }
     public string userRole { get; set; }
-    [NotMapped]
-    public string test { get; set; }
-
     private Guid? refreshToken { get; set; }
     private DateTime? expirationRefreshTokenTime { get; set; } 
 
