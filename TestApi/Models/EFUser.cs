@@ -11,7 +11,7 @@ public class User :IEntity
     public string login { get; set; }
     public string password { get; set; }
     public string userRole { get; set; }
-    private Guid? refreshToken { get; set; }
+    public Guid? refreshToken { get; private set; }
     private DateTime? expirationRefreshTokenTime { get; set; } 
 
     public User()
@@ -54,7 +54,7 @@ public class User :IEntity
     }
     public void CreateRefresh(IRepository _rep)
     {
-        this.refreshToken = new Guid?();
+        this.refreshToken = Guid.NewGuid();
             this.expirationRefreshTokenTime = DateTime.Now.AddDays(1);
             _rep.Update<User>(this);
             _rep.Save();
