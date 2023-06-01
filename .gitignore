@@ -3,3 +3,4 @@
 ################################################################################
 
 /TestApi/appsettings.json
+/TestApi/appsettings.Development.json
