@@ -8,7 +8,7 @@ public class MapperConfigs : Profile
 {
     public MapperConfigs()
     {
-        //CreateMap<User, EFUser>();
+        CreateMap<User, EFUser>();
         CreateMap< EFUser ,User>();
     }
 

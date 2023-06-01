@@ -3,14 +3,16 @@ namespace TestApi.Models;
 
 public class MyContext : DbContext
 {
-    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<EFUser> Users { get; set; } = null!;
     private readonly string _connectString;
     public MyContext(DbContextOptions<MyContext> options) : base(options)
     {
+        
 
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        
         if (!optionsBuilder.IsConfigured)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -20,6 +22,9 @@ public class MyContext : DbContext
             var connectionString = configuration.GetConnectionString("Db");
             optionsBuilder.UseNpgsql(connectionString);
         }
+
+        //this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
    
 }

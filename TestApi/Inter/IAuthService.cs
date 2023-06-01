@@ -1,6 +1,9 @@
-﻿namespace TestApi.Inter;
+﻿using TestApi.Models;
 
-public class IAuthService
+namespace TestApi.Inter;
+
+public interface IAuthService
 {
-    
+    AuthResponse Auth(string login, string password);
+    RefreshTokenRequest RefreshToken(RefreshTokenRequest request);
 }

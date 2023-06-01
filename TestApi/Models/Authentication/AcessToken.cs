@@ -2,13 +2,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using TestApi.Classes;
 
 namespace TestApi.Models;
 
 [NotMapped]
 public class AcessToken
 {
-    public string access_token { get; set; }
+    public string accessToken { get; set; }
     //public Guid userId { get; set; }
 
     public static AcessToken GenerateNewToken(User user)
@@ -28,7 +29,7 @@ public class AcessToken
  
             AcessToken response = new AcessToken
             {
-                access_token = encodedJwt,
+                accessToken = encodedJwt,
                 //userId = user.id
             };
             return response; 

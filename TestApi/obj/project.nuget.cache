@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "GS4cmCL8r4/90Ns8NOC+WBToEtjfPYpbhqpvSsJJV473/YWu88JvARVlhViFi5UrNAsUozCwanZbKs3MsplzyA==",
+  "dgSpecHash": "b6R4FMlEj2daFs9iT73nowv1khVNMFInhvKaLfbgsMd1inYBm3E/FeEgWQFxzkiOIMRs5Nw+VtE94G/ynB1uIw==",
   "success": true,
   "projectFilePath": "D:\\RiderProj\\TestApi\\TestApi\\TestApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\7solo\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\7solo\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\7solo\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.4\\microsoft.aspnetcore.authentication.jwtbearer.7.0.4.nupkg.sha512",
     "C:\\Users\\7solo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.3\\microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",
-    "C:\\Users\\7solo\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\7solo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\7solo\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0-preview.1.23111.4\\microsoft.entityframeworkcore.8.0.0-preview.1.23111.4.nupkg.sha512",
     "C:\\Users\\7solo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0-preview.1.23111.4\\microsoft.entityframeworkcore.abstractions.8.0.0-preview.1.23111.4.nupkg.sha512",
     "C:\\Users\\7solo\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0-preview.1.23111.4\\microsoft.entityframeworkcore.analyzers.8.0.0-preview.1.23111.4.nupkg.sha512",

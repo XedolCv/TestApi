@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using TestApi.Extensions;
 using TestApi.Inter;
 using TestApi.Models;
+using AutoMapper;
+using TestApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Db")));
 builder.Services.AddScoped<IRepository,Repository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 AuthExtension.AddAsymmetricAuthentication(builder.Services);
 /*builder.Services.AddAuthentication(options =>
@@ -36,6 +40,7 @@ AuthExtension.AddAsymmetricAuthentication(builder.Services);
       ValidateIssuerSigningKey = true
     });*/
 builder.Services.AddAuthorization();
+
 //builder.Services.AddSingleton<Repo>()
 var app = builder.Build();
 

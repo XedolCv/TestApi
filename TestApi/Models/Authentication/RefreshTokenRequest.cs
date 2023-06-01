@@ -6,5 +6,5 @@ namespace TestApi.Models;
 public class RefreshTokenRequest
 {
     public Guid refreshToken { get; set; }
-    public string acessToken { get; set; }
-}
+    public AcessToken acessToken { get; set; }
+} 

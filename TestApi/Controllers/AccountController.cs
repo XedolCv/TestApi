@@ -1,10 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using TestApi.Inter;
 using TestApi.Models;
+using TestApi.Services;
 
 namespace TestApi.Controllers;
 [ApiController]
@@ -13,24 +11,24 @@ namespace TestApi.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly IRepository _rep;
+    private readonly IAuthService _authService;
 
-    public AccountController(IRepository rep)
+    public AccountController(IRepository rep, IAuthService authService)
     {
         _rep = rep;
+        _authService = authService;
     }
-
+    
     [AllowAnonymous]
-    [HttpPost("/token")]
-    public IActionResult Token(string username, string password)
+    [HttpGet("/auth")]
+    public IActionResult AuthorizeUser(string username, string password)
     {
-        User user = _rep.GetOne<User>(it => it.login == username && it.password == password);
-        user.CreateRefresh(_rep);
-        var token = AcessToken.GenerateNewToken(user);
-        if (token == null)
+        var response = _authService.Auth(username, password);
+        if (response.token == null)
         {
             return BadRequest(new { errorText = "Invalid username or password." });
         }
-        return Ok(token);
+        return Ok(response);
     }
 
     [HttpPost("/refreshToken")]
@@ -38,12 +36,10 @@ public class AccountController : ControllerBase
     {
         try
         {
-            TokenData date = new TokenData(request.acessToken,_rep,request.refreshToken);
-            if (date.refreshAvailability)
+            var req = _authService.RefreshToken(request);
+            if (req is not null)
             {
-                AcessToken response = AcessToken.GenerateNewToken(date.tokenOwner);
-                date.tokenOwner.GenerateNewRefresh(_rep);
-                return Ok(response);
+                return Ok(req);
             }
             else
             {
@@ -53,8 +49,6 @@ public class AccountController : ControllerBase
         catch (Exception e)
         {
             return BadRequest(e.Message);
-            _rep.Dispose();
         }
-       
     }
 }

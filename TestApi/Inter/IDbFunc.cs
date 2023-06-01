@@ -14,6 +14,8 @@ public interface IRepository: IDisposable
     void Update<T>(T item) where T :class,IEntity,new(); // обновление объекта
     void Delete<T>(T id) where T :class,IEntity,new(); // удаление объекта по id
     void Save();  // сохранение изменений
+    void DetachAllEntities();  // отсановить отслеживание всех
+    void Attach<T>(T item) where T : class, IEntity, new();
 }
 
 public class Repository: IRepository 
@@ -63,7 +65,9 @@ public class Repository: IRepository
     }
     public void Update<T>(T item)where T :class,IEntity,new()
     {
+        //if (_context.Set<T>().Entry(item).State != EntityState.Modified) 
         _context.Set<T>().Entry(item).State = EntityState.Modified;
+        
     }
     public void Delete<T>(T id) where T :class,IEntity,new()
     {
@@ -73,6 +77,23 @@ public class Repository: IRepository
     public void Save()
     {
         _context.SaveChanges();
+        
     }
-    
+    public void DetachAllEntities()
+    {
+        var undetachedEntriesCopy = _context.ChangeTracker.Entries()
+            .Where(e => e.State != EntityState.Detached)
+            .ToList();
+
+        foreach (var entry in undetachedEntriesCopy)
+            entry.State = EntityState.Detached;
+        
+    }
+
+    public void Attach<T>(T item)where T :class,IEntity,new()
+    {
+        _context.Set<T>().Attach(item);
+        var ds = _context.Entry(item).Properties;
+    }
+
 }
